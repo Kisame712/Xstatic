@@ -3,6 +3,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float jumpSpeed;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckDistance;
     private Rigidbody playerRb;
     private Animator playerAnim;
     Vector2 playerInput;
@@ -21,12 +25,37 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Run();
+        Jump();
     }
 
-    void Run()
+    private void Run()
     {
-        playerRb.linearVelocity += new Vector3(playerInput.x, 0f, playerInput.y) * moveSpeed * Time.deltaTime;
+        if (playerInput != Vector2.zero)
+        {
+            playerAnim.SetBool("isRunning", true);
+        }
+        else
+        {
+            playerAnim.SetBool("isRunning", false);
+        }
+        playerRb.linearVelocity += new Vector3(playerInput.x, 0f, playerInput.y) * moveSpeed * Time.fixedDeltaTime;
     }
 
+    private void Jump()
+    {
+        if (IsGrounded() && Input.GetKey(KeyCode.Space))
+        {
+            playerAnim.SetTrigger("jump");
+            playerRb.linearVelocity += new Vector3(0f, 1f, 0f) * jumpSpeed * Time.fixedDeltaTime; 
+        }
+    }
 
+    private bool IsGrounded()
+    {
+        if(Physics.CheckSphere(groundCheck.position, groundCheckDistance, groundLayer))
+        {
+            return true;
+        }
+        return false;
+    }
 }
