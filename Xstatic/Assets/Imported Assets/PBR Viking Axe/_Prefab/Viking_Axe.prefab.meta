@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b91dc775c64fe254b904619cecd6255f
+timeCreated: 1501399257
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 96770
+  packageName: Free PBR Viking Axe
+  packageVersion: 1.0
+  assetPath: Assets/PBR Viking Axe/_Prefab/Viking_Axe.prefab
+  uploadId: 723538

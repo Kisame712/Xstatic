@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 10732d692b9cfd14fa68d46c833b379c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 96770
+  packageName: Free PBR Viking Axe
+  packageVersion: 1.0
+  assetPath: Assets/PBR Viking Axe/_Model/Materials/axeMat.mat
+  uploadId: 723538
