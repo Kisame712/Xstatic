@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
         LookForward();
-       
     }
 
     private void FixedUpdate()
@@ -33,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private void LookForward()
     {
         Vector3 rotateDirection = new Vector3(playerInput.x, transform.forward.y, playerInput.y);
-        float rotationSpeed = 10f;
+        float rotationSpeed = 2f;
         transform.forward = Vector3.Slerp(transform.forward, rotateDirection, rotationSpeed * Time.deltaTime);
         
     }
