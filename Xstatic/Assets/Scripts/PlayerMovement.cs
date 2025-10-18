@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private Transform groundCheck;
@@ -10,6 +11,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance;
+
+    [Header("Attack")]
+    [SerializeField] private float attackRange;
+    [SerializeField] private Transform attackOrigin;
+    [SerializeField] private int damageAmount;
     private Rigidbody playerRb;
     private Animator playerAnim;
     Vector2 playerInput;
@@ -30,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         LookForward();
         Run();
         Jump();
+        Attack();
     }
 
     private void LookForward()
@@ -61,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
  
         moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
         playerRb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
-        //playerRb.linearVelocity += new Vector3(playerInput.x, 0f, playerInput.y) * moveSpeed * Time.fixedDeltaTime;
     }
 
     private void Jump()
@@ -80,5 +86,30 @@ public class PlayerMovement : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private void Attack()
+    {
+        if(IsGrounded() && Input.GetMouseButton(0))
+        {
+            playerAnim.SetTrigger("attack");
+        }
+    }
+
+    public void AttackEnemyFromAnimation()
+    {
+       if(Physics.OverlapSphere(attackOrigin.position, attackRange)!=null)
+        {
+            Collider[] colliders = Physics.OverlapSphere(attackOrigin.position, attackRange);
+            foreach(Collider collider in colliders)
+            {
+                if(collider.TryGetComponent<Enemy>(out Enemy enemy))
+                {
+                    HealthSystem enemyHealthSystem = enemy.GetEnemyHealthSystem();
+                    enemyHealthSystem.TakeDamage(damageAmount, false);
+                }
+            }
+
+        }
     }
 }
