@@ -1,16 +1,19 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform orientation;
+    [SerializeField] private Camera playerCamera;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance;
     private Rigidbody playerRb;
     private Animator playerAnim;
     Vector2 playerInput;
-
+    Vector3 moveDirection;
     private void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -20,21 +23,29 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         playerInput = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
-        LookForward();
     }
 
     private void FixedUpdate()
     {
+        LookForward();
         Run();
         Jump();
     }
 
     private void LookForward()
     {
-        Vector3 rotateDirection = new Vector3(playerInput.x, transform.forward.y, playerInput.y);
-        float rotationSpeed = 2f;
-        transform.forward = Vector3.Slerp(transform.forward, rotateDirection, rotationSpeed * Time.deltaTime);
-        
+        // Works if camera is not following the player
+        Ray cursorRay = playerCamera.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+        float rayLength;
+
+        if (groundPlane.Raycast(cursorRay, out rayLength))
+        {
+            Vector3 pointToLook = cursorRay.GetPoint(rayLength);
+            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+        }
+
     }
 
     private void Run()
@@ -47,7 +58,10 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnim.SetBool("isRunning", false);
         }
-        playerRb.linearVelocity += new Vector3(playerInput.x, 0f, playerInput.y) * moveSpeed * Time.fixedDeltaTime;
+ 
+        moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
+        playerRb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+        //playerRb.linearVelocity += new Vector3(playerInput.x, 0f, playerInput.y) * moveSpeed * Time.fixedDeltaTime;
     }
 
     private void Jump()
