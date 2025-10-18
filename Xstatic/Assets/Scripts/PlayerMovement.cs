@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded() && Input.GetKey(KeyCode.Space))
         {
             playerAnim.SetTrigger("jump");
-            playerRb.linearVelocity += new Vector3(0f, 1f, 0f) * jumpSpeed * Time.fixedDeltaTime; 
+            playerRb.AddForce(new Vector3(0f, jumpSpeed, 0f), ForceMode.Force); 
         }
     }
 
