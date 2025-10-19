@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpSpeed;
+    [SerializeField] private float airMultiplier;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform orientation;
     [SerializeField] private Camera playerCamera;
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         LookForward();
         Run();
+        SpeedControl();
         Jump();
         Attack();
     }
@@ -57,6 +59,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
+        float speedMultiplier = 1f;
+        if (IsGrounded())
+        {
+            speedMultiplier = 1f;
+        }
+        else
+        {
+            speedMultiplier = airMultiplier;
+        }
+    
         if (playerInput != Vector2.zero)
         {
             playerAnim.SetBool("isRunning", true);
@@ -67,15 +79,16 @@ public class PlayerMovement : MonoBehaviour
         }
  
         moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
-        playerRb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+        playerRb.AddForce(moveDirection.normalized * moveSpeed * speedMultiplier, ForceMode.Force);
     }
 
     private void Jump()
     {
         if (IsGrounded() && Input.GetKey(KeyCode.Space))
         {
+            playerRb.linearVelocity = new Vector3(playerRb.linearVelocity.x, 0f, playerRb.linearVelocity.z);
             playerAnim.SetTrigger("jump");
-            playerRb.AddForce(new Vector3(0f, jumpSpeed, 0f), ForceMode.Force); 
+            playerRb.AddForce(new Vector3(0f, jumpSpeed, 0f), ForceMode.Impulse); 
         }
     }
 
@@ -87,6 +100,16 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+    private void SpeedControl()
+    {
+        Vector3 currentVelocity = new Vector3(playerRb.linearVelocity.x, 0f, playerRb.linearVelocity.z);
+        if(currentVelocity.magnitude > moveSpeed)
+        {
+            Vector3 controlledVelocity = currentVelocity.normalized * moveSpeed;
+            playerRb.linearVelocity = new Vector3(controlledVelocity.x, playerRb.linearVelocity.y, controlledVelocity.z);
+        }
+    }
+
 
     private void Attack()
     {
