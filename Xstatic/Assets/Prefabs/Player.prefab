@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
-  isInverted: 0
+  isInverted: 1
 --- !u!1 &7862138691140637119
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +478,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7702840789039361760, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
