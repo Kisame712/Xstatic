@@ -630,6 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  hitEffect: {fileID: 0}
 --- !u!114 &8750229121446380920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,7 +645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 25
   jumpSpeed: 15
-  airMultiplier: 0.3
+  airMultiplier: 0.2
   groundCheck: {fileID: 3545496431397312102}
   orientation: {fileID: 909417288664558886}
   playerCamera: {fileID: 0}
