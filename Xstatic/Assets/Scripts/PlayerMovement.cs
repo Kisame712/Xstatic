@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Effects")]
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip runSound;
+    [SerializeField] private Transform cameraTransform;
     private Rigidbody playerRb;
     private Animator playerAnim;
     Vector2 playerInput;
@@ -47,17 +48,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void LookForward()
     {
-        // Works if camera is not following the player
-        Ray cursorRay = playerCamera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 
-        float rayLength;
-
-        if (groundPlane.Raycast(cursorRay, out rayLength))
-        {
-            Vector3 pointToLook = cursorRay.GetPoint(rayLength);
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-        }
+        transform.forward = new Vector3(cameraTransform.forward.x, transform.forward.y, cameraTransform.forward.z);
 
     }
 
@@ -83,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         }
  
         moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
+        //playerRb.linearVelocity += moveDirection.normalized * moveSpeed * speedMultiplier * Time.fixedDeltaTime;
         playerRb.AddForce(moveDirection.normalized * moveSpeed * speedMultiplier, ForceMode.Force);
     }
 

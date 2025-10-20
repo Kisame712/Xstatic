@@ -438,15 +438,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366ca43f64be7d14085cbc21aa33e701, type: 3}
       propertyPath: m_LocalRotation.w
@@ -630,7 +630,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 5134310040265400941, guid: 1f01e55ba046415428434cf8b2f83771, type: 3}
+  deadEffect: {fileID: 2124277147000548487, guid: b915f036fccf68845869545106efcaef, type: 3}
 --- !u!114 &8750229121446380920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,6 +657,9 @@ MonoBehaviour:
   attackRange: 1
   attackOrigin: {fileID: 6392313270892403994}
   damageAmount: 40
+  jumpSound: {fileID: 8300000, guid: 944a1d0b414dd3f4b8722b3e56866942, type: 3}
+  runSound: {fileID: 8300000, guid: aa298db8a3fd8d048bfe26187a1aa9de, type: 3}
+  cameraTransform: {fileID: 0}
 --- !u!54 &4711716969554793047
 Rigidbody:
   m_ObjectHideFlags: 0
