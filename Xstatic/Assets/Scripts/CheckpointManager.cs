@@ -6,6 +6,7 @@ public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] private Transform respawnPosition;
     [SerializeField] private GameObject player;
+    [SerializeField] private AudioClip warpSound;
     public static CheckpointManager Instance { private set; get; }
 
     private List<Transform> checkpointList;
@@ -32,6 +33,7 @@ public class CheckpointManager : MonoBehaviour
 
     public void RespawnPlayer()
     {
+        SFXSoundPlayer.Instance.PlaySoundEffect(warpSound);
         player.transform.position = respawnPosition.position;
         HealthSystem playerHealthSystem = player.GetComponent<HealthSystem>();
         playerHealthSystem.RestoreHP();

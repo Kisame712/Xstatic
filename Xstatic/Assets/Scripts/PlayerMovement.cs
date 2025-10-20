@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private Transform attackOrigin;
     [SerializeField] private int damageAmount;
+
+    [Header("Effects")]
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip runSound;
     private Rigidbody playerRb;
     private Animator playerAnim;
     Vector2 playerInput;
@@ -86,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded() && Input.GetKey(KeyCode.Space))
         {
+            SFXSoundPlayer.Instance.PlaySoundEffect(jumpSound);
             playerRb.linearVelocity = new Vector3(playerRb.linearVelocity.x, 0f, playerRb.linearVelocity.z);
             playerAnim.SetTrigger("jump");
             playerRb.AddForce(new Vector3(0f, jumpSpeed, 0f), ForceMode.Impulse); 
