@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System;
 
 public class HealthSystem : MonoBehaviour
@@ -9,6 +8,7 @@ public class HealthSystem : MonoBehaviour
     private int maxHealth;
 
     public event EventHandler OnDamageTaken;
+    public event EventHandler OnRestoreHP;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class HealthSystem : MonoBehaviour
         {
             if (isPlayer)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                CheckpointManager.Instance.RespawnPlayer();
             }
 
             else
@@ -39,6 +39,7 @@ public class HealthSystem : MonoBehaviour
     public void RestoreHP()
     {
         health = maxHealth;
+        OnRestoreHP?.Invoke(this, EventArgs.Empty);
 
     }
 

@@ -431,6 +431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 6975776228631205048}
+  damageAmount: 10
+  cooldownTimer: 1
 --- !u!114 &4947002610721883724
 MonoBehaviour:
   m_ObjectHideFlags: 0

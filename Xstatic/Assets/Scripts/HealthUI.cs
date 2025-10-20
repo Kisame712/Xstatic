@@ -11,6 +11,7 @@ public class HealthUI : MonoBehaviour
     {
         UpdateHealthBar();
         healthSystem.OnDamageTaken += HealthSystem_OnDamageTaken;
+        healthSystem.OnRestoreHP += HealthSystem_OnRestoreHP;
     }
 
     private void UpdateHealthBar()
@@ -19,6 +20,11 @@ public class HealthUI : MonoBehaviour
     }
 
     private void HealthSystem_OnDamageTaken(object sender, EventArgs e)
+    {
+        UpdateHealthBar();
+    }
+
+    private void HealthSystem_OnRestoreHP(object sender, EventArgs e)
     {
         UpdateHealthBar();
     }
